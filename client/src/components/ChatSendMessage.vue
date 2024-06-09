@@ -16,18 +16,19 @@
     const lsName = localStorage.getItem('name')
     if (lsName === null || lsName === '') {
       location.reload();
+    } else {
+      await fetch("http://localhost:3000/chats", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: message.value,
+          created_by: lsName
+        })
+      })
     }
 
-    await fetch("http://localhost:3000/chats", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        message: message.value,
-        created_by: lsName
-      })
-    })
 
     message.value = ''
   }
